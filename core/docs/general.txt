@@ -1,0 +1,69 @@
+Documentação básica:
+
+Estrutura do framework
+
+app
+ |-- controllers
+ |-- models
+ |-- views
+config
+ |-- config.php
+ |-- routes.php
+core
+ |-- docs
+ |-- libs
+   |-- controllers
+   |-- models
+   |-- views
+ |-- resources
+webroot
+ |-- att
+ |-- css
+ |-- img
+ |-- js
+
+ 1. app
+ Diretório que guarda os arquivos da aplicação. É basicamente este diretório que varia em cada aplicação,
+ mantendo o resto do framework bascicamente o mesmo.
+ 	1.1. controllers
+ 	Contém os controllers particulares da aplicação, executando funções de inteligência e regras de negócio.
+ 	1.2. models
+ 	Contém os modelos da aplicação e seus arquivos sempre terminam com .class.php. São basicamente abstrações das tabelas do banco de dados, levando sempre o nome da tabela do banco no singular. Ex: tabela clients = Client.class.php
+ 	1.3. views
+ 	Contém as views particulares da aplicação. Neste framework as views instanciam os controllers que forem necessários no momento e não o contrário. A parte de templating é bem flexível e é utilizada basicamente para header, footer e scripts comuns.
+ 2. config
+ Contém arquivos de configuração de sistema como diretório raiz, dados de conexão com o banco, etc.
+ 	2.1. config.php
+ 	Arquivo de configuração geral do sistema. Traz as variáveis globais da aplicação e dados de conexão com o banco.
+ 	2.2. routes.php
+ 	Arquivo de rotas do sistema. Não precisa ser alterado, salvo em caso de rotas particulares. O framework funciona seguindo as regras do padrão REST, portanto uma dada URL http://projeto.com/users/show/2 automaticamente inclui o arquivo app/views/users/show.php e recebe o parâmetro 2 via $params[0];
+ 3. core
+ Neste diretório estão os arquivos de raiz do framework.
+ 	3.1. docs
+ 	Documentação geral sobre a arquitetura
+ 	3.2. libs
+ 	Bibliotecas padrão do sistema.
+ 		3.2.1. controllers
+ 		Contém os controllers do framework e o controller geral da aplicação. A função dos arquivos neste diretório é prover funções comuns e de fácil acesso ao sistema como formatação de data e hora, filtro de sql injections, verificação de campos de fomrulário, etc.
+ 		3.2.2. models
+ 		Contém os modelos do framework. Os arquivos principais são:
+ 			3.2.2.1. Common.class.php
+ 			Realiza regras comuns às classes do sistema, como set, get e construtor genérico
+ 			3.2.2.2. Connect.class.php
+ 			Conexão principal com o banco de dados
+ 			3.2.2.3. DAO.class.php
+ 			Classe de acesso aos dados do sistema. É essa classe que manipula todas as demais classes da aplicação quando o assunto é interagir com o banco de dados.
+ 			3.2.2.4. DBUtil.class.php
+ 			Esta classe escreve as strings SQL para a classe DAO
+ 			3.2.2.5. Form.class.php
+ 			Classe que gera campos de formulários automaticamente. A vantagem de sua utilização é verificação automática de campos de formulários e o envio direto dos dados para o controlador de forma organizada.
+ 			3.2.2.6. Inflector.class.php
+ 			Esta classe pluraliza e singulariza nomes em inglês. Ela ajuda a tornar o REST com o banco de dados possível.
+ 		3.2.3. views
+ 		Contém as views comuns do framework como páginas de erro e permissão
+ 	3.3. resources
+ 	Quaisquer blibliotecas externas que precisem ser integradas manualmente ao projeto devem vir para este diretório.
+ 4. webroot
+ Contém os arquivos estáticos do sistema como scripts, folhas de estilo, imagens e anexos.
+
+
